@@ -73,6 +73,44 @@ public class ParqueDeDiversao {
         }
     }
 
+    public void registraVisitante() {
+        System.out.println("Digite o nome do visitante");
+        String nome = entrada.next();
+        System.out.println("Digite o ano de nascimento do visitante");
+        int anoNascimento = entrada.nextInt();
+
+        // Calcula a idade do visitante
+        int idade = 2024 - anoNascimento;
+
+        if (idade >= 18) {
+            int telefone = entrada.nextInt();
+            this.pessoas.add(new Adulto(nome, anoNascimento, telefone));
+            return;
+        } else {
+            System.out.println("Digite o telefone do responsável");
+            int telefone = entrada.nextInt();
+            Adulto responsavel = procuraResponsavel(telefone);
+            if (responsavel == null) {
+                System.out.println("Responsável não cadastrado");
+                return;
+            }
+            this.pessoas.add(new Crianca(nome, anoNascimento, responsavel));
+            return;
+        }
+    }
+    
+    public Adulto procuraResponsavel(int telefone) {
+        System.out.println("Digite o nome do visitante");
+        for (Pessoa p : pessoas) {
+            if (p instanceof Adulto && ((Adulto) p).getTelefone() == telefone) {
+                System.out.println("Visitante encontrado");
+                return (Adulto) p;
+            }
+        }
+        System.out.println("Visitante não encontrado");
+        return null;
+    }
+
     public Atracao procuraAtracao(String nome) {
         for (Atracao a : atracoes) {
             if (a.getNome().equals(nome)) {
@@ -85,13 +123,7 @@ public class ParqueDeDiversao {
     public void consultaAtracao() {
         System.out.println("Digite o nome da atração");
         String nome = entrada.next();
-
         Atracao a = procuraAtracao(nome);
-        if (a == null) {
-            System.out.println("Atração não encontrada");
-            return;
-        }
-
         int visitas = a.getVisitas();
         System.out.println("Atração: " + a.getNome() + " - Visitas: " + visitas);
     }
