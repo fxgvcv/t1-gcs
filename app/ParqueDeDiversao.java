@@ -111,5 +111,24 @@ public class ParqueDeDiversao {
         return null;
     }
 
-        
+    public Atracao procuraAtracao(String nome) {
+        for (Atracao a : atracoes) {
+            if (a.getNome().equals(nome)) {
+                return a;
+            }
+        }
+        return null;
+    }
+    
+    public void consultaAtracao() {
+        System.out.println("Digite o nome da atração");
+        String nome = entrada.next();
+        Atracao a = procuraAtracao(nome);
+        if (a == null) {
+            System.out.println("Atração não encontrada");
+            return;
+        }
+        int visitas = a.getVisitas();
+        System.out.println("Atração: " + a.getNome() + " - Visitas: " + visitas);
+    }
 }
