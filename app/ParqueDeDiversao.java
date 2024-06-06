@@ -111,6 +111,15 @@ public class ParqueDeDiversao {
         return null;
     }
 
+    public Pessoa procuraVisitante(String nome) {
+        for (Pessoa p : pessoas) {
+            if (p.getNome().equals(nome)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     public Atracao procuraAtracao(String nome) {
         for (Atracao a : atracoes) {
             if (a.getNome().equals(nome)) {
