@@ -73,6 +73,32 @@ public class ParqueDeDiversao {
         }
     }
 
+    public void registraVisitante() {
+        System.out.println("Digite o nome do visitante");
+        String nome = entrada.next();
+        System.out.println("Digite o ano de nascimento do visitante");
+        int anoNascimento = entrada.nextInt();
+
+        // Calcula a idade do visitante
+        int idade = 2024 - anoNascimento;
+
+        if (idade >= 18) {
+            int telefone = entrada.nextInt();
+            this.pessoas.add(new Adulto(nome, anoNascimento, telefone));
+            return;
+        } else {
+            System.out.println("Digite o telefone do responsável");
+            int telefone = entrada.nextInt();
+            Adulto responsavel = procuraResponsavel(telefone);
+            if (responsavel == null) {
+                System.out.println("Responsável não cadastrado");
+                return;
+            }
+            this.pessoas.add(new Crianca(nome, anoNascimento, responsavel));
+            return;
+        }
+    }
+
     public Adulto procuraResponsavel(int telefone) {
         System.out.println("Digite o nome do visitante");
         for (Pessoa p : pessoas) {
