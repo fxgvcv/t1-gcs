@@ -1,20 +1,75 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import dados.*;
 
 public class ParqueDeDiversao {
+    private Scanner entrada;
     private ArrayList<Bilheteria> bilheterias;
     private ArrayList<Atracao> atracoes;
     private ArrayList<Pessoa> pessoas;
 
     public ParqueDeDiversao() {
-        bilheterias = new ArrayList<Bilheteria>();
-        atracoes = new ArrayList<Atracao>();
-        pessoas = new ArrayList<Pessoa>();
+        this.entrada = new Scanner(System.in);
+        this.bilheterias = new ArrayList<Bilheteria>();
+        this.atracoes = new ArrayList<Atracao>();
+        this.pessoas = new ArrayList<Pessoa>();
+
+        // Cria atrações default
+        this.atracoes.add(new Atracao("Montanha Russa"));
+        this.atracoes.add(new Atracao("Carrossel"));
+        this.atracoes.add(new Atracao("Roda Gigante"));
+        this.atracoes.add(new Atracao("Barco Viking"));
+        this.atracoes.add(new Atracao("Carro-Choque"));
+        this.atracoes.add(new Atracao("Trem-fantasma"));
+
+        // Cria algumas pessoas default
+        this.pessoas.add(new Adulto("João", 2000, 123));
+        this.pessoas.add(new Crianca("Maria", 2005, (Adulto) this.pessoas.get(0)));
+        this.pessoas.add(new Adulto("José", 1995, 456));
+        this.pessoas.add(new Adulto("Daniel", 1980, 789));
     }
 
     public void executa() {
+        System.out.println("Executando sistema de gestão de parque de diversão");
+        System.out.println("Digite 1 para registrar um visitante");
+        System.out.println("Digite 2 para gerar uma lista de visitantes");
+        System.out.println("Digite 3 para emitir um ingresso");
+        System.out.println("Digite 4 para consultar um visitante");
+        System.out.println("Digite 5 para consultar o faturamento de um mês");
+        System.out.println("Digite 6 para consultar a quantidade de visitas nas atrações");
+        System.out.println("Digite 7 para registrar uma visita de um visitante à uma atração");
+        System.out.println("Digite 8 para sair");
+        int opcao = entrada.nextInt();
+        switch (opcao) {
+            case 1:
+                registraVisitante();
+                break;
+            case 2:
+                geraListaVisitantes();
+                break;
+            case 3:
+                emiteIngresso();
+                break;
+            case 4:
+                consultaVisitante();
+                break;
+            case 5:
+                consultaFaturamento();
+                break;
+            case 6:
+                consultaAtracao();
+                break;
+            case 7:
+                registraVisita();
+                break;
+            case 8:
+                System.out.println("Saindo do sistema");
+                return;
+            default:
+                break;
+        }
     }
 }
