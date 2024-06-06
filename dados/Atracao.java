@@ -16,4 +16,8 @@ public class Atracao {
     public int getVisitas() {
         return visitas;
     }
+
+    public void visitado() {
+        this.visitas++;
+    }
 }
