@@ -72,4 +72,13 @@ public class ParqueDeDiversao {
                 break;
         }
     }
+
+    public Atracao procuraAtracao(String nome) {
+        for (Atracao a : atracoes) {
+            if (a.getNome().equals(nome)) {
+                return a;
+            }
+        }
+        return null;
+    }
 }
