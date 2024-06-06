@@ -140,4 +140,31 @@ public class ParqueDeDiversao {
         int visitas = a.getVisitas();
         System.out.println("Atração: " + a.getNome() + " - Visitas: " + visitas);
     }
+
+    public void consultaVisitante() {
+        System.out.println("Digite o nome do visitante");
+        String nome = entrada.next();
+
+        Pessoa visitante = procuraVisitante(nome);
+        if (visitante == null) {
+            System.out.println("Visitante não encontrado");
+            return;
+        }
+
+        if (visitante instanceof Adulto) {
+            System.out.println("Nome: " + visitante.getNome() + " - Ano de Nascimento: " + visitante.getAnoNascimento() + " - Telefone: " + ((Adulto) visitante).getTelefone());
+        } else {
+            System.out.println("Nome: " + visitante.getNome() + " - Ano de Nascimento: " + visitante.getAnoNascimento() + " - Responsável: " + ((Crianca) visitante).getResponsavel().getNome());
+        }
+
+        ArrayList<Ingresso> ingressosVisitante = visitante.getIngressos();
+
+
+        // Arrumar, pois precisa somar as atracoes para todos os ingressos
+        for (Ingresso i : ingressosVisitante) {
+            i.getVisitasAtracoes().forEach((a, v) -> {
+                System.out.println("Atração: " + a.getNome() + " - Visitas: " + v);
+            });
+        }
+    }
 }
