@@ -6,6 +6,9 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import dados.*;
@@ -191,14 +194,30 @@ public class ParqueDeDiversao {
         }
 
         ArrayList<Ingresso> ingressosVisitante = visitante.getIngressos();
+        if (ingressosVisitante.size() == 0) {
+            System.out.println("Visitante não possui visitas registradas");
+            return;
+        }
 
+        HashMap<Atracao, Integer> visitasAtracoesTotal = new HashMap<Atracao, Integer>();
+        if (visitasAtracoesTotal.size() == 0) {
+            System.out.println("Visitante não possui visitas registradas");
+            return;
+        }
 
-        // Arrumar, pois precisa somar as atracoes para todos os ingressos
         for (Ingresso i : ingressosVisitante) {
             i.getVisitasAtracoes().forEach((a, v) -> {
-                System.out.println("Atração: " + a.getNome() + " - Visitas: " + v);
+                if (visitasAtracoesTotal.containsKey(a)) {
+                    visitasAtracoesTotal.put(a, visitasAtracoesTotal.get(a) + v);
+                } else {
+                    visitasAtracoesTotal.put(a, v);
+                }
             });
         }
+
+        visitasAtracoesTotal.forEach((a, v) -> {
+            System.out.println("Atração: " + a.getNome() + " - Visitas: " + v);
+        });
     }
   
     // Método para consultar o faturamento de um mês
@@ -277,5 +296,37 @@ public class ParqueDeDiversao {
 
         visitante.visitaAtracao(a, i);
         System.out.println("Visita registrada com sucesso");
+    }
+
+    public void consultaRankingAtracoes() {
+        // Imprime o ranking de atrações mais visitadas
+        ArrayList<Atracao> atracoesOrdenado = this.atracoes;
+
+        Collections.sort(atracoesOrdenado, new Comparator<Atracao>() {
+            @Override
+            public int compare(Atracao a1, Atracao a2) {
+                return Integer.compare(a2.getVisitas(), a1.getVisitas());
+            }
+        });
+
+        for (int i = 0; i < atracoesOrdenado.size(); i++) {
+            System.out.println("Atração: " + atracoesOrdenado.get(i).getNome() + " - Visitas: " + atracoesOrdenado.get(i).getVisitas());
+        }
+    }
+
+    public void consultaTopVisitantes() {
+        // Imprime o top 5 visitantes com mais ingressos
+        ArrayList<Pessoa> pessoasOrdenado = this.pessoas;
+
+        Collections.sort(pessoasOrdenado, new Comparator<Pessoa>() {
+            @Override
+            public int compare(Pessoa p1, Pessoa p2) {
+                return Integer.compare(p2.getIngressos().size(), p1.getIngressos().size());
+            }
+        });
+
+        for (int i = 0; i < 5 && i < pessoasOrdenado.size(); i++) {
+            System.out.println("Nome: " + pessoasOrdenado.get(i).getNome() + " - Ingressos: " + pessoasOrdenado.get(i).getIngressos().size());
+        }
     }
 }
