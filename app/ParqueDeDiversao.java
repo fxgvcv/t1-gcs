@@ -37,59 +37,62 @@ public class ParqueDeDiversao {
         this.atracoes.add(new Atracao("Trem-fantasma"));
 
         // Cria algumas pessoas default
-        this.pessoas.add(new Adulto("João", 2000, 123));
+        this.pessoas.add(new Adulto("Joao", 2000, 123));
         this.pessoas.add(new Crianca("Maria", 2005, (Adulto) this.pessoas.get(0)));
-        this.pessoas.add(new Adulto("José", 1995, 456));
+        this.pessoas.add(new Adulto("Jose", 1995, 456));
         this.pessoas.add(new Adulto("Daniel", 1980, 789));
     }
 
     public void executa() {
         // Console java simples
-        int opcao;
+        System.out.println("Executando sistema de gestão de parque de diversão");
+        String opcao;
+        boolean loop = true;
         do{
             menu();
-            opcao = entrada.nextInt();
+            opcao = entrada.nextLine();
+            System.out.println("Opção escolhida: " + opcao);
             switch (opcao) {
-                case 1:
+                case "1":
                     registraVisitante();
                     break;
-                case 2:
+                case "2":
                     geraListaVisitantes();
                     break;
-                case 3:
+                case "3":
                     emiteIngresso();
                     break;
-                case 4:
+                case "4":
                     consultaVisitante();
                     break;
-                case 5:
+                case "5":
                     consultaFaturamento();
                     break;
-                case 6:
+                case "6":
                     consultaAtracao();
                     break;
-                case 7:
+                case "7":
                     registraVisita();
                     break;
-                case 8:
+                case "8":
                     consultaTopVisitantes();
                     break;
-                case 9:
+                case "9":
                     consultaRankingAtracoes();
                     break;
-                case 10:
+                case "10":
                     System.out.println("Saindo do sistema");
+                    loop = false;
                     return;
                 default:
                     System.out.println("Opção inválida");
                     break;
             }
-        }while(opcao != 8);
+        }while(loop);
         
     }
 
     public void menu(){
-        System.out.println("Executando sistema de gestão de parque de diversão");
         System.out.println("Digite 1 para registrar um visitante");
         System.out.println("Digite 2 para gerar uma lista de visitantes");
         System.out.println("Digite 3 para emitir um ingresso");
@@ -208,13 +211,13 @@ public class ParqueDeDiversao {
         }
 
         ArrayList<Ingresso> ingressosVisitante = visitante.getIngressos();
-        if (ingressosVisitante.size() == 0) {
+        if (ingressosVisitante == null || ingressosVisitante.size() == 0) {
             System.out.println("Visitante não possui visitas registradas");
             return;
         }
 
         HashMap<Atracao, Integer> visitasAtracoesTotal = new HashMap<Atracao, Integer>();
-        if (visitasAtracoesTotal.size() == 0) {
+        if (visitasAtracoesTotal == null || visitasAtracoesTotal.size() == 0) {
             System.out.println("Visitante não possui visitas registradas");
             return;
         }
@@ -332,15 +335,25 @@ public class ParqueDeDiversao {
         // Imprime o top 5 visitantes com mais ingressos
         ArrayList<Pessoa> pessoasOrdenado = this.pessoas;
 
+        if (pessoasOrdenado == null || pessoasOrdenado.size() == 0) {
+            System.out.println("Não há visitantes cadastrados");
+            return;
+        }
+
         Collections.sort(pessoasOrdenado, new Comparator<Pessoa>() {
             @Override
             public int compare(Pessoa p1, Pessoa p2) {
-                return Integer.compare(p2.getIngressos().size(), p1.getIngressos().size());
+                int size1 = (p1.getIngressos() != null) ? p1.getIngressos().size() : 0;
+                int size2 = (p2.getIngressos() != null) ? p2.getIngressos().size() : 0;
+                return Integer.compare(size2, size1);
             }
         });
 
         for (int i = 0; i < 5 && i < pessoasOrdenado.size(); i++) {
-            System.out.println("Nome: " + pessoasOrdenado.get(i).getNome() + " - Ingressos: " + pessoasOrdenado.get(i).getIngressos().size());
+            Pessoa pessoa = pessoasOrdenado.get(i);
+            String nome = (pessoa.getNome() != null) ? pessoa.getNome() : "";
+            int ingressosSize = (pessoa.getIngressos() != null) ? pessoa.getIngressos().size() : 0;
+            System.out.println("Nome: " + nome + " - Ingressos: " + ingressosSize);
         }
     }
 }
