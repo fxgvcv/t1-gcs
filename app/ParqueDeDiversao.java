@@ -119,12 +119,14 @@ public class ParqueDeDiversao {
         if (idade >= 18) {
             System.out.println("Digite o telefone do visitante: ");
             int telefone = entrada.nextInt();
+            entrada.nextLine();
             this.pessoas.add(new Adulto(nome, anoNascimento, telefone));
             System.out.println("Visitante cadastrado!");
             return;
         } else {
             System.out.println("Digite o telefone do responsável: ");
             int telefone = entrada.nextInt();
+            entrada.nextLine();
             Adulto responsavel = procuraResponsavel(telefone);
             if (responsavel == null) {
                 System.out.println("Telefone do responsável não cadastrado.");
