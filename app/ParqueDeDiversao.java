@@ -111,6 +111,17 @@ public class ParqueDeDiversao {
         return null;
     }
 
+    public Bilheteria procuraBilheteria(String data) {
+        for (Bilheteria b : bilheterias) {
+            if (b.getData().equals(data)) {
+                return b;
+            }
+        }
+        Bilheteria b = new Bilheteria(data);
+        bilheterias.add(b);
+        return b;
+    }
+
     public Pessoa procuraVisitante(String nome) {
         for (Pessoa p : pessoas) {
             if (p.getNome().equals(nome)) {
@@ -167,7 +178,7 @@ public class ParqueDeDiversao {
             });
         }
     }
-    
+  
     public void consultaFaturamento() {
         System.out.println("Digite o mês e o ano (mm/aaaa)");
         String data = entrada.next();
@@ -179,5 +190,26 @@ public class ParqueDeDiversao {
             }
         }
         System.out.println("Faturamento do mês " + data + ": " + faturamento);
+     }
+
+    public void emiteIngresso() {
+        System.out.println("Digite o nome do visitante");
+        String nome = entrada.next();
+        System.out.println("Digite o dia do ingresso (dd/mm/aaaa)");
+        String dia = entrada.next();
+
+        Pessoa visitante = procuraVisitante(nome);
+        if (visitante == null) {
+            System.out.println("Visitante não encontrado");
+            return;
+        }
+
+        Bilheteria bilheteria = procuraBilheteria(dia);
+
+        if (bilheteria.emitirIngresso(visitante)) {
+            System.out.println("Ingresso emitido com sucesso");
+        } else {
+            System.out.println("Limite de ingressos atingido");
+        }
     }
 }
