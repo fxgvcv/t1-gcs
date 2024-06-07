@@ -28,6 +28,10 @@ public abstract class Pessoa {
         this.ingressos.add(ingresso);
     }
 
+    public void visitaAtracao(Atracao atracao, Ingresso ingresso) {
+        ingresso.visitarAtracao(atracao);
+    }
+
     public Ingresso consultaIngresso(String data) {
         for (Ingresso ing : ingressos) {
             if (ing.getDia().equals(data)) {
