@@ -105,8 +105,10 @@ public class ParqueDeDiversao {
         int idade = 2024 - anoNascimento;
 
         if (idade >= 18) {
+            System.out.println("Digite o telefone do visitante");
             int telefone = entrada.nextInt();
             this.pessoas.add(new Adulto(nome, anoNascimento, telefone));
+            System.out.println("Visitante cadastrado!");
             return;
         } else {
             System.out.println("Digite o telefone do responsável");
