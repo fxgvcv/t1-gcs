@@ -9,6 +9,7 @@ public class Ingresso {
     private HashMap<Atracao, Integer> visitasAtracoes;
 
     public Ingresso(double preco, String dia, String identificador, Pessoa usuario) {
+        visitasAtracoes = new HashMap<Atracao, Integer>();
         this.preco = preco;
         this.dia = dia;
         this.identificador = identificador;
