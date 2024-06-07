@@ -111,6 +111,17 @@ public class ParqueDeDiversao {
         return null;
     }
 
+    public Bilheteria procuraBilheteria(String data) {
+        for (Bilheteria b : bilheterias) {
+            if (b.getData().equals(data)) {
+                return b;
+            }
+        }
+        Bilheteria b = new Bilheteria(data);
+        bilheterias.add(b);
+        return b;
+    }
+
     public Pessoa procuraVisitante(String nome) {
         for (Pessoa p : pessoas) {
             if (p.getNome().equals(nome)) {
