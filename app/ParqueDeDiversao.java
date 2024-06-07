@@ -1,11 +1,16 @@
 /*
  * Classe principal do sistema de gestão de um parque de diversão
- * versão 1.0
+ * versão 1.2
+ * log de alterações:
+ * - Adicionado método para consultar o ranking de atrações mais visitadas
+ * - Adicionado método para consultar o top 5 visitantes com mais ingressos
  * Autor: Grupo 4
  */
 package app;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -40,6 +45,43 @@ public class ParqueDeDiversao {
 
     public void executa() {
         // Console java simples
+        int opcao;
+        do{
+            menu();
+            opcao = entrada.nextInt();
+            switch (opcao) {
+                case 1:
+                    registraVisitante();
+                    break;
+                case 2:
+                    geraListaVisitantes();
+                    break;
+                case 3:
+                    emiteIngresso();
+                    break;
+                case 4:
+                    consultaVisitante();
+                    break;
+                case 5:
+                    consultaFaturamento();
+                    break;
+                case 6:
+                    consultaAtracao();
+                    break;
+                case 7:
+                    registraVisita();
+                    break;
+                case 8:
+                    System.out.println("Saindo do sistema");
+                    return;
+                default:
+                    break;
+            }
+        }while(opcao != 8);
+        
+    }
+
+    public void menu(){
         System.out.println("Executando sistema de gestão de parque de diversão");
         System.out.println("Digite 1 para registrar um visitante");
         System.out.println("Digite 2 para gerar uma lista de visitantes");
@@ -49,35 +91,6 @@ public class ParqueDeDiversao {
         System.out.println("Digite 6 para consultar a quantidade de visitas nas atrações");
         System.out.println("Digite 7 para registrar uma visita de um visitante à uma atração");
         System.out.println("Digite 8 para sair");
-        int opcao = entrada.nextInt();
-        switch (opcao) {
-            case 1:
-                registraVisitante();
-                break;
-            case 2:
-                geraListaVisitantes();
-                break;
-            case 3:
-                emiteIngresso();
-                break;
-            case 4:
-                consultaVisitante();
-                break;
-            case 5:
-                consultaFaturamento();
-                break;
-            case 6:
-                consultaAtracao();
-                break;
-            case 7:
-                registraVisita();
-                break;
-            case 8:
-                System.out.println("Saindo do sistema");
-                return;
-            default:
-                break;
-        }
     }
 
     // Método para registrar um visitante, que identifica se é adulto ou criança
@@ -286,5 +299,37 @@ public class ParqueDeDiversao {
 
         visitante.visitaAtracao(a, i);
         System.out.println("Visita registrada com sucesso");
+    }
+
+    public void consultaRankingAtracoes() {
+        // Imprime o ranking de atrações mais visitadas
+        ArrayList<Atracao> atracoesOrdenado = this.atracoes;
+
+        Collections.sort(atracoesOrdenado, new Comparator<Atracao>() {
+            @Override
+            public int compare(Atracao a1, Atracao a2) {
+                return Integer.compare(a2.getVisitas(), a1.getVisitas());
+            }
+        });
+
+        for (int i = 0; i < atracoesOrdenado.size(); i++) {
+            System.out.println("Atração: " + atracoesOrdenado.get(i).getNome() + " - Visitas: " + atracoesOrdenado.get(i).getVisitas());
+        }
+    }
+
+    public void consultaTopVisitantes() {
+        // Imprime o top 5 visitantes com mais ingressos
+        ArrayList<Pessoa> pessoasOrdenado = this.pessoas;
+
+        Collections.sort(pessoasOrdenado, new Comparator<Pessoa>() {
+            @Override
+            public int compare(Pessoa p1, Pessoa p2) {
+                return Integer.compare(p2.getIngressos().size(), p1.getIngressos().size());
+            }
+        });
+
+        for (int i = 0; i < 5 && i < pessoasOrdenado.size(); i++) {
+            System.out.println("Nome: " + pessoasOrdenado.get(i).getNome() + " - Ingressos: " + pessoasOrdenado.get(i).getIngressos().size());
+        }
     }
 }
