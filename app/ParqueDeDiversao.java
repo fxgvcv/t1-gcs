@@ -167,4 +167,17 @@ public class ParqueDeDiversao {
             });
         }
     }
+    
+    public void consultaFaturamento() {
+        System.out.println("Digite o mês e o ano (mm/aaaa)");
+        String data = entrada.next();
+
+        double faturamento = 0;
+        for (Bilheteria b : bilheterias) {
+            if (b.getData().substring(3).equals(data)) {
+                faturamento += b.getFaturamento();
+            }
+        }
+        System.out.println("Faturamento do mês " + data + ": " + faturamento);
+    }
 }
