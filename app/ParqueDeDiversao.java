@@ -130,11 +130,9 @@ public class ParqueDeDiversao {
     public Adulto procuraResponsavel(int telefone) {
         for (Pessoa p : pessoas) {
             if (p instanceof Adulto && ((Adulto) p).getTelefone() == telefone) {
-                System.out.println("Visitante encontrado");
                 return (Adulto) p;
             }
         }
-        System.out.println("Visitante não encontrado");
         return null;
     }
 
