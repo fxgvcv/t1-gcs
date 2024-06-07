@@ -8,6 +8,7 @@ public abstract class Pessoa {
     private ArrayList<Ingresso> ingressos;
     
     public Pessoa(String nome, int anoNascimento) {
+        this.ingressos = new ArrayList<Ingresso>();
         this.nome = nome;
         this.anoNascimento = anoNascimento;
     }
@@ -33,6 +34,10 @@ public abstract class Pessoa {
     }
 
     public Ingresso consultaIngresso(String data) {
+        if (ingressos == null) {
+            return null;
+        }
+
         for (Ingresso ing : ingressos) {
             if (ing.getDia().equals(data)) {
                 return ing;
