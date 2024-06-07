@@ -23,4 +23,21 @@ public abstract class Pessoa {
     public ArrayList<Ingresso> getIngressos() {
         return ingressos;
     }
+
+    public void adicionaIngresso(Ingresso ingresso) {
+        this.ingressos.add(ingresso);
+    }
+
+    public void visitaAtracao(Atracao atracao, Ingresso ingresso) {
+        ingresso.visitarAtracao(atracao);
+    }
+
+    public Ingresso consultaIngresso(String data) {
+        for (Ingresso ing : ingressos) {
+            if (ing.getDia().equals(data)) {
+                return ing;
+            }
+        }
+        return null;
+    }
 }
