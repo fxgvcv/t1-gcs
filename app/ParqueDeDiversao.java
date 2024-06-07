@@ -105,18 +105,23 @@ public class ParqueDeDiversao {
         int idade = 2024 - anoNascimento;
 
         if (idade >= 18) {
+            System.out.println("Digite o telefone do visitante: ");
             int telefone = entrada.nextInt();
             this.pessoas.add(new Adulto(nome, anoNascimento, telefone));
+            System.out.println("Visitante cadastrado!");
             return;
         } else {
-            System.out.println("Digite o telefone do responsável");
+            System.out.println("Digite o telefone do responsável: ");
             int telefone = entrada.nextInt();
             Adulto responsavel = procuraResponsavel(telefone);
             if (responsavel == null) {
-                System.out.println("Responsável não cadastrado");
+                System.out.println("Telefone do responsável não cadastrado.");
                 return;
+            }else{
+                System.out.println("Responsável encontrado.");
+                this.pessoas.add(new Crianca(nome, anoNascimento, responsavel));
+                System.out.println("Visitante cadastrado.");
             }
-            this.pessoas.add(new Crianca(nome, anoNascimento, responsavel));
             return;
         }
     }
