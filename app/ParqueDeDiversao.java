@@ -6,6 +6,8 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -294,5 +296,21 @@ public class ParqueDeDiversao {
 
         visitante.visitaAtracao(a, i);
         System.out.println("Visita registrada com sucesso");
+    }
+
+    public void consultaRankingAtracoes() {
+        // Imprime o ranking de atrações mais visitadas
+        ArrayList<Atracao> atracoesOrdenado = this.atracoes;
+
+        Collections.sort(atracoesOrdenado, new Comparator<Atracao>() {
+            @Override
+            public int compare(Atracao a1, Atracao a2) {
+                return Integer.compare(a2.getVisitas(), a1.getVisitas());
+            }
+        });
+
+        for (int i = 0; i < atracoesOrdenado.size(); i++) {
+            System.out.println("Atração: " + atracoesOrdenado.get(i).getNome() + " - Visitas: " + atracoesOrdenado.get(i).getVisitas());
+        }
     }
 }
