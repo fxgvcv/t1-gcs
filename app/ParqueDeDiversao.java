@@ -222,4 +222,34 @@ public class ParqueDeDiversao {
             }
         }
     }
+
+    public void registraVisita() {
+        System.out.println("Digite o nome do visitante");
+        String nome = entrada.next();
+        System.out.println("Digite o nome da atração");
+        String nomeAtracao = entrada.next();
+        System.out.println("Digite o dia da visita (dd/mm/aaaa)");
+        String dia = entrada.next();
+
+        Pessoa visitante = procuraVisitante(nome);
+        if (visitante == null) {
+            System.out.println("Visitante não encontrado");
+            return;
+        }
+
+        Atracao a = procuraAtracao(nomeAtracao);
+        if (a == null) {
+            System.out.println("Atração não encontrada");
+            return;
+        }
+
+        Ingresso i = visitante.consultaIngresso(dia);
+        if (i == null) {
+            System.out.println("Ingresso não encontrado");
+            return;
+        }
+
+        visitante.visitaAtracao(a, i);
+        System.out.println("Visita registrada com sucesso");
+    }
 }
