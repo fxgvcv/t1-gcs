@@ -109,7 +109,7 @@ public class ParqueDeDiversao {
     // e se é criança, procura o responsável na lista de visitantes
     public void registraVisitante() {
         System.out.println("Digite o nome do visitante");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
         System.out.println("Digite o ano de nascimento do visitante");
         int anoNascimento = entrada.nextInt();
 
@@ -183,7 +183,7 @@ public class ParqueDeDiversao {
     // Método para consultar a quantidade de visitas em uma atração
     public void consultaAtracao() {
         System.out.println("Digite o nome da atração");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
         Atracao a = procuraAtracao(nome);
         if (a == null) {
             System.out.println("Atração não encontrada");
@@ -196,7 +196,7 @@ public class ParqueDeDiversao {
     // Método para consultar um visitante, que mostra os dados do visitante e as atrações visitadas
     public void consultaVisitante() {
         System.out.println("Digite o nome do visitante");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
 
         Pessoa visitante = procuraVisitante(nome);
         if (visitante == null) {
@@ -240,7 +240,7 @@ public class ParqueDeDiversao {
     // Método para consultar o faturamento de um mês
     public void consultaFaturamento() {
         System.out.println("Digite o mês e o ano (mm/aaaa)");
-        String data = entrada.next();
+        String data = entrada.nextLine();
 
         double faturamento = 0;
         for (Bilheteria b : bilheterias) {
@@ -254,9 +254,9 @@ public class ParqueDeDiversao {
     // Método para emitir um ingresso, que procura o visitante e a bilheteria
     public void emiteIngresso() {
         System.out.println("Digite o nome do visitante");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
         System.out.println("Digite o dia do ingresso (dd/mm/aaaa)");
-        String dia = entrada.next();
+        String dia = entrada.nextLine();
 
         Pessoa visitante = procuraVisitante(nome);
         if (visitante == null) {
@@ -287,11 +287,11 @@ public class ParqueDeDiversao {
     // Método para registrar uma visita de um visitante à uma atração
     public void registraVisita() {
         System.out.println("Digite o nome do visitante");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
         System.out.println("Digite o nome da atração");
-        String nomeAtracao = entrada.next();
+        String nomeAtracao = entrada.nextLine();
         System.out.println("Digite o dia da visita (dd/mm/aaaa)");
-        String dia = entrada.next();
+        String dia = entrada.nextLine();
 
         Pessoa visitante = procuraVisitante(nome);
         if (visitante == null) {
