@@ -128,14 +128,11 @@ public class ParqueDeDiversao {
     
     // Método para procurar um adulto na lista de visitantes
     public Adulto procuraResponsavel(int telefone) {
-        System.out.println("Digite o nome do visitante");
         for (Pessoa p : pessoas) {
             if (p instanceof Adulto && ((Adulto) p).getTelefone() == telefone) {
-                System.out.println("Visitante encontrado");
                 return (Adulto) p;
             }
         }
-        System.out.println("Visitante não encontrado");
         return null;
     }
 
