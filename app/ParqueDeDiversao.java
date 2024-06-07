@@ -1,6 +1,9 @@
 /*
  * Classe principal do sistema de gestão de um parque de diversão
- * versão 1.0
+ * versão 1.2
+ * log de alterações:
+ * - Adicionado método para consultar o ranking de atrações mais visitadas
+ * - Adicionado método para consultar o top 5 visitantes com mais ingressos
  * Autor: Grupo 4
  */
 package app;
@@ -34,52 +37,62 @@ public class ParqueDeDiversao {
         this.atracoes.add(new Atracao("Trem-fantasma"));
 
         // Cria algumas pessoas default
-        this.pessoas.add(new Adulto("João", 2000, 123));
+        this.pessoas.add(new Adulto("Joao", 2000, 123));
         this.pessoas.add(new Crianca("Maria", 2005, (Adulto) this.pessoas.get(0)));
-        this.pessoas.add(new Adulto("José", 1995, 456));
+        this.pessoas.add(new Adulto("Jose", 1995, 456));
         this.pessoas.add(new Adulto("Daniel", 1980, 789));
     }
 
     public void executa() {
         // Console java simples
-        int opcao;
+        System.out.println("Executando sistema de gestão de parque de diversão");
+        String opcao;
+        boolean loop = true;
         do{
             menu();
-            opcao = entrada.nextInt();
+            opcao = entrada.nextLine();
+            System.out.println("Opção escolhida: " + opcao);
             switch (opcao) {
-                case 1:
+                case "1":
                     registraVisitante();
                     break;
-                case 2:
+                case "2":
                     geraListaVisitantes();
                     break;
-                case 3:
+                case "3":
                     emiteIngresso();
                     break;
-                case 4:
+                case "4":
                     consultaVisitante();
                     break;
-                case 5:
+                case "5":
                     consultaFaturamento();
                     break;
-                case 6:
+                case "6":
                     consultaAtracao();
                     break;
-                case 7:
+                case "7":
                     registraVisita();
                     break;
-                case 8:
+                case "8":
+                    consultaTopVisitantes();
+                    break;
+                case "9":
+                    consultaRankingAtracoes();
+                    break;
+                case "10":
                     System.out.println("Saindo do sistema");
+                    loop = false;
                     return;
                 default:
+                    System.out.println("Opção inválida");
                     break;
             }
-        }while(opcao != 8);
+        }while(loop);
         
     }
 
     public void menu(){
-        System.out.println("Executando sistema de gestão de parque de diversão");
         System.out.println("Digite 1 para registrar um visitante");
         System.out.println("Digite 2 para gerar uma lista de visitantes");
         System.out.println("Digite 3 para emitir um ingresso");
@@ -87,14 +100,16 @@ public class ParqueDeDiversao {
         System.out.println("Digite 5 para consultar o faturamento de um mês");
         System.out.println("Digite 6 para consultar a quantidade de visitas nas atrações");
         System.out.println("Digite 7 para registrar uma visita de um visitante à uma atração");
-        System.out.println("Digite 8 para sair");
+        System.out.println("Digite 8 para consultar o top 5 visitantes com mais ingressos");
+        System.out.println("Digite 9 para o ranking de atrações mais visitadas");
+        System.out.println("Digite 10 para sair");
     }
 
     // Método para registrar um visitante, que identifica se é adulto ou criança
     // e se é criança, procura o responsável na lista de visitantes
     public void registraVisitante() {
         System.out.println("Digite o nome do visitante");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
         System.out.println("Digite o ano de nascimento do visitante");
         int anoNascimento = entrada.nextInt();
 
@@ -102,32 +117,36 @@ public class ParqueDeDiversao {
         int idade = 2024 - anoNascimento;
 
         if (idade >= 18) {
+            System.out.println("Digite o telefone do visitante: ");
             int telefone = entrada.nextInt();
+            entrada.nextLine();
             this.pessoas.add(new Adulto(nome, anoNascimento, telefone));
+            System.out.println("Visitante cadastrado!");
             return;
         } else {
-            System.out.println("Digite o telefone do responsável");
+            System.out.println("Digite o telefone do responsável: ");
             int telefone = entrada.nextInt();
+            entrada.nextLine();
             Adulto responsavel = procuraResponsavel(telefone);
             if (responsavel == null) {
-                System.out.println("Responsável não cadastrado");
+                System.out.println("Telefone do responsável não cadastrado.");
                 return;
+            }else{
+                System.out.println("Responsável encontrado.");
+                this.pessoas.add(new Crianca(nome, anoNascimento, responsavel));
+                System.out.println("Visitante cadastrado.");
             }
-            this.pessoas.add(new Crianca(nome, anoNascimento, responsavel));
             return;
         }
     }
     
     // Método para procurar um adulto na lista de visitantes
     public Adulto procuraResponsavel(int telefone) {
-        System.out.println("Digite o nome do visitante");
         for (Pessoa p : pessoas) {
             if (p instanceof Adulto && ((Adulto) p).getTelefone() == telefone) {
-                System.out.println("Visitante encontrado");
                 return (Adulto) p;
             }
         }
-        System.out.println("Visitante não encontrado");
         return null;
     }
 
@@ -166,7 +185,7 @@ public class ParqueDeDiversao {
     // Método para consultar a quantidade de visitas em uma atração
     public void consultaAtracao() {
         System.out.println("Digite o nome da atração");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
         Atracao a = procuraAtracao(nome);
         if (a == null) {
             System.out.println("Atração não encontrada");
@@ -179,7 +198,7 @@ public class ParqueDeDiversao {
     // Método para consultar um visitante, que mostra os dados do visitante e as atrações visitadas
     public void consultaVisitante() {
         System.out.println("Digite o nome do visitante");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
 
         Pessoa visitante = procuraVisitante(nome);
         if (visitante == null) {
@@ -194,13 +213,13 @@ public class ParqueDeDiversao {
         }
 
         ArrayList<Ingresso> ingressosVisitante = visitante.getIngressos();
-        if (ingressosVisitante.size() == 0) {
+        if (ingressosVisitante == null || ingressosVisitante.size() == 0) {
             System.out.println("Visitante não possui visitas registradas");
             return;
         }
 
         HashMap<Atracao, Integer> visitasAtracoesTotal = new HashMap<Atracao, Integer>();
-        if (visitasAtracoesTotal.size() == 0) {
+        if (visitasAtracoesTotal == null || visitasAtracoesTotal.size() == 0) {
             System.out.println("Visitante não possui visitas registradas");
             return;
         }
@@ -223,7 +242,7 @@ public class ParqueDeDiversao {
     // Método para consultar o faturamento de um mês
     public void consultaFaturamento() {
         System.out.println("Digite o mês e o ano (mm/aaaa)");
-        String data = entrada.next();
+        String data = entrada.nextLine();
 
         double faturamento = 0;
         for (Bilheteria b : bilheterias) {
@@ -237,9 +256,9 @@ public class ParqueDeDiversao {
     // Método para emitir um ingresso, que procura o visitante e a bilheteria
     public void emiteIngresso() {
         System.out.println("Digite o nome do visitante");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
         System.out.println("Digite o dia do ingresso (dd/mm/aaaa)");
-        String dia = entrada.next();
+        String dia = entrada.nextLine();
 
         Pessoa visitante = procuraVisitante(nome);
         if (visitante == null) {
@@ -270,11 +289,11 @@ public class ParqueDeDiversao {
     // Método para registrar uma visita de um visitante à uma atração
     public void registraVisita() {
         System.out.println("Digite o nome do visitante");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
         System.out.println("Digite o nome da atração");
-        String nomeAtracao = entrada.next();
+        String nomeAtracao = entrada.nextLine();
         System.out.println("Digite o dia da visita (dd/mm/aaaa)");
-        String dia = entrada.next();
+        String dia = entrada.nextLine();
 
         Pessoa visitante = procuraVisitante(nome);
         if (visitante == null) {
@@ -318,15 +337,25 @@ public class ParqueDeDiversao {
         // Imprime o top 5 visitantes com mais ingressos
         ArrayList<Pessoa> pessoasOrdenado = this.pessoas;
 
+        if (pessoasOrdenado == null || pessoasOrdenado.size() == 0) {
+            System.out.println("Não há visitantes cadastrados");
+            return;
+        }
+
         Collections.sort(pessoasOrdenado, new Comparator<Pessoa>() {
             @Override
             public int compare(Pessoa p1, Pessoa p2) {
-                return Integer.compare(p2.getIngressos().size(), p1.getIngressos().size());
+                int size1 = (p1.getIngressos() != null) ? p1.getIngressos().size() : 0;
+                int size2 = (p2.getIngressos() != null) ? p2.getIngressos().size() : 0;
+                return Integer.compare(size2, size1);
             }
         });
 
         for (int i = 0; i < 5 && i < pessoasOrdenado.size(); i++) {
-            System.out.println("Nome: " + pessoasOrdenado.get(i).getNome() + " - Ingressos: " + pessoasOrdenado.get(i).getIngressos().size());
+            Pessoa pessoa = pessoasOrdenado.get(i);
+            String nome = (pessoa.getNome() != null) ? pessoa.getNome() : "";
+            int ingressosSize = (pessoa.getIngressos() != null) ? pessoa.getIngressos().size() : 0;
+            System.out.println("Nome: " + nome + " - Ingressos: " + ingressosSize);
         }
     }
 }
