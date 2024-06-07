@@ -72,9 +72,16 @@ public class ParqueDeDiversao {
                     registraVisita();
                     break;
                 case 8:
+                    consultaTopVisitantes();
+                    break;
+                case 9:
+                    consultaRankingAtracoes();
+                    break;
+                case 10:
                     System.out.println("Saindo do sistema");
                     return;
                 default:
+                    System.out.println("Opção inválida");
                     break;
             }
         }while(opcao != 8);
@@ -90,7 +97,9 @@ public class ParqueDeDiversao {
         System.out.println("Digite 5 para consultar o faturamento de um mês");
         System.out.println("Digite 6 para consultar a quantidade de visitas nas atrações");
         System.out.println("Digite 7 para registrar uma visita de um visitante à uma atração");
-        System.out.println("Digite 8 para sair");
+        System.out.println("Digite 8 para consultar o top 5 visitantes com mais ingressos");
+        System.out.println("Digite 9 para o ranking de atrações mais visitadas");
+        System.out.println("Digite 10 para sair");
     }
 
     // Método para registrar um visitante, que identifica se é adulto ou criança
