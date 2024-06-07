@@ -313,4 +313,20 @@ public class ParqueDeDiversao {
             System.out.println("Atração: " + atracoesOrdenado.get(i).getNome() + " - Visitas: " + atracoesOrdenado.get(i).getVisitas());
         }
     }
+
+    public void consultaTopVisitantes() {
+        // Imprime o top 5 visitantes com mais ingressos
+        ArrayList<Pessoa> pessoasOrdenado = this.pessoas;
+
+        Collections.sort(pessoasOrdenado, new Comparator<Pessoa>() {
+            @Override
+            public int compare(Pessoa p1, Pessoa p2) {
+                return Integer.compare(p2.getIngressos().size(), p1.getIngressos().size());
+            }
+        });
+
+        for (int i = 0; i < 5 && i < pessoasOrdenado.size(); i++) {
+            System.out.println("Nome: " + pessoasOrdenado.get(i).getNome() + " - Ingressos: " + pessoasOrdenado.get(i).getIngressos().size());
+        }
+    }
 }
