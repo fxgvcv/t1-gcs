@@ -212,4 +212,14 @@ public class ParqueDeDiversao {
             System.out.println("Limite de ingressos atingido");
         }
     }
+    
+    public void geraListaVisitantes() {
+        for (Pessoa p : pessoas) {
+            if (p instanceof Adulto) {
+                System.out.println("Nome: " + p.getNome() + " - Ano de Nascimento: " + p.getAnoNascimento() + " - Telefone: " + ((Adulto) p).getTelefone());
+            } else {
+                System.out.println("Nome: " + p.getNome() + " - Ano de Nascimento: " + p.getAnoNascimento() + " - Responsável: " + ((Crianca) p).getResponsavel().getNome());
+            }
+        }
+    }
 }
