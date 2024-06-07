@@ -41,6 +41,30 @@ public class ParqueDeDiversao {
         this.pessoas.add(new Crianca("Maria", 2005, (Adulto) this.pessoas.get(0)));
         this.pessoas.add(new Adulto("Jose", 1995, 456));
         this.pessoas.add(new Adulto("Daniel", 1980, 789));
+        this.pessoas.add(new Crianca("Ana", 2010, (Adulto) this.pessoas.get(2)));
+
+        // Cria ingressos default
+        Bilheteria b = procuraBilheteria("01/01/2024");
+        b.emitirIngresso(this.pessoas.get(0));
+        b.emitirIngresso(this.pessoas.get(1));
+        b.emitirIngresso(this.pessoas.get(2));
+        Bilheteria b2 = procuraBilheteria("02/01/2024");
+        b2.emitirIngresso(this.pessoas.get(3));
+        b2.emitirIngresso(this.pessoas.get(4));
+
+        // Cria visitas default
+        this.pessoas.get(0).visitaAtracao(this.atracoes.get(0), this.pessoas.get(0).consultaIngresso("01/01/2024"));
+        this.pessoas.get(0).visitaAtracao(this.atracoes.get(1), this.pessoas.get(0).consultaIngresso("01/01/2024"));
+        this.pessoas.get(0).visitaAtracao(this.atracoes.get(2), this.pessoas.get(0).consultaIngresso("01/01/2024"));
+        this.pessoas.get(0).visitaAtracao(this.atracoes.get(3), this.pessoas.get(0).consultaIngresso("01/01/2024"));
+
+        this.pessoas.get(1).visitaAtracao(this.atracoes.get(2), this.pessoas.get(1).consultaIngresso("01/01/2024"));
+        this.pessoas.get(1).visitaAtracao(this.atracoes.get(3), this.pessoas.get(1).consultaIngresso("01/01/2024"));
+        this.pessoas.get(1).visitaAtracao(this.atracoes.get(4), this.pessoas.get(1).consultaIngresso("01/01/2024"));
+
+        this.pessoas.get(2).visitaAtracao(this.atracoes.get(3), this.pessoas.get(2).consultaIngresso("01/01/2024"));
+        this.pessoas.get(3).visitaAtracao(this.atracoes.get(4), this.pessoas.get(3).consultaIngresso("02/01/2024"));
+        this.pessoas.get(4).visitaAtracao(this.atracoes.get(5), this.pessoas.get(4).consultaIngresso("02/01/2024"));
     }
 
     public void executa() {
