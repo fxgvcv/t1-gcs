@@ -178,4 +178,25 @@ public class ParqueDeDiversao {
             });
         }
     }
+
+    public void emiteIngresso() {
+        System.out.println("Digite o nome do visitante");
+        String nome = entrada.next();
+        System.out.println("Digite o dia do ingresso (dd/mm/aaaa)");
+        String dia = entrada.next();
+
+        Pessoa visitante = procuraVisitante(nome);
+        if (visitante == null) {
+            System.out.println("Visitante não encontrado");
+            return;
+        }
+
+        Bilheteria bilheteria = procuraBilheteria(dia);
+
+        if (bilheteria.emitirIngresso(visitante)) {
+            System.out.println("Ingresso emitido com sucesso");
+        } else {
+            System.out.println("Limite de ingressos atingido");
+        }
+    }
 }
