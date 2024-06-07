@@ -6,6 +6,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import dados.*;
@@ -183,14 +184,30 @@ public class ParqueDeDiversao {
         }
 
         ArrayList<Ingresso> ingressosVisitante = visitante.getIngressos();
+        if (ingressosVisitante.size() == 0) {
+            System.out.println("Visitante não possui visitas registradas");
+            return;
+        }
 
+        HashMap<Atracao, Integer> visitasAtracoesTotal = new HashMap<Atracao, Integer>();
+        if (visitasAtracoesTotal.size() == 0) {
+            System.out.println("Visitante não possui visitas registradas");
+            return;
+        }
 
-        // Arrumar, pois precisa somar as atracoes para todos os ingressos
         for (Ingresso i : ingressosVisitante) {
             i.getVisitasAtracoes().forEach((a, v) -> {
-                System.out.println("Atração: " + a.getNome() + " - Visitas: " + v);
+                if (visitasAtracoesTotal.containsKey(a)) {
+                    visitasAtracoesTotal.put(a, visitasAtracoesTotal.get(a) + v);
+                } else {
+                    visitasAtracoesTotal.put(a, v);
+                }
             });
         }
+
+        visitasAtracoesTotal.forEach((a, v) -> {
+            System.out.println("Atração: " + a.getNome() + " - Visitas: " + v);
+        });
     }
   
     // Método para consultar o faturamento de um mês
