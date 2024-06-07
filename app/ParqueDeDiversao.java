@@ -111,6 +111,17 @@ public class ParqueDeDiversao {
         return null;
     }
 
+    public Bilheteria procuraBilheteria(String data) {
+        for (Bilheteria b : bilheterias) {
+            if (b.getData().equals(data)) {
+                return b;
+            }
+        }
+        Bilheteria b = new Bilheteria(data);
+        bilheterias.add(b);
+        return b;
+    }
+
     public Pessoa procuraVisitante(String nome) {
         for (Pessoa p : pessoas) {
             if (p.getNome().equals(nome)) {
@@ -165,6 +176,27 @@ public class ParqueDeDiversao {
             i.getVisitasAtracoes().forEach((a, v) -> {
                 System.out.println("Atração: " + a.getNome() + " - Visitas: " + v);
             });
+        }
+    }
+
+    public void emiteIngresso() {
+        System.out.println("Digite o nome do visitante");
+        String nome = entrada.next();
+        System.out.println("Digite o dia do ingresso (dd/mm/aaaa)");
+        String dia = entrada.next();
+
+        Pessoa visitante = procuraVisitante(nome);
+        if (visitante == null) {
+            System.out.println("Visitante não encontrado");
+            return;
+        }
+
+        Bilheteria bilheteria = procuraBilheteria(dia);
+
+        if (bilheteria.emitirIngresso(visitante)) {
+            System.out.println("Ingresso emitido com sucesso");
+        } else {
+            System.out.println("Limite de ingressos atingido");
         }
     }
 }
