@@ -1,6 +1,9 @@
 /*
  * Classe principal do sistema de gestão de um parque de diversão
- * versão 1.0
+ * versão 1.2
+ * log de alterações:
+ * - Adicionado método para consultar o ranking de atrações mais visitadas
+ * - Adicionado método para consultar o top 5 visitantes com mais ingressos
  * Autor: Grupo 4
  */
 package app;
